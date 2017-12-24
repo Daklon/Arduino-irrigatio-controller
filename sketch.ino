@@ -3,13 +3,14 @@ int pinSensor = A0;
 int pinPower = 8;
 int pinRelay = 7;
 int measured = 0;
-int minMoisture = 0;
-int maxMoisture = 0;
+int minMoisture = 100;
+int maxMoisture = 400;
 int waitTimeStopped = 3600000; //one hour
 int waitTImeRunning = 5000; //five seconds
 
 void setup() 
 {
+	Serial.begin(9600);
 	pinMode(pinPower, OUTPUT);//set pinPower as OUTPUT
 	pinMode(pinRelay, OUTPUT);//set pinRelay as OUTPUT
   digitalWrite(soilPower, LOW);//set pinPower to LOW in order to shutdown the sensor
@@ -39,6 +40,7 @@ void readSensor()
 {
 	digitalWrite(soilPower, HIGH);//turn on the sensor
 	delay(10);//wait to the sensor becomes stable
-	measured = digitalRead(pinSensor);//store the data
+	measured = analogRead(pinSensor);//store the data
 	digitalWrite(soilPower, LOW);//turn off the sensor
+	Serial.println(measured);
 }
